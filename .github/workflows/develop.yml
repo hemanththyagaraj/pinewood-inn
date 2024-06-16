@@ -1,0 +1,26 @@
+name: Dev deployment
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run lints
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run vitest
