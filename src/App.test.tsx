@@ -1,7 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import Button from 'components/Button';
+import { render, screen } from '../tests/TestUtils';
 
 describe('sample test', () => {
   it('tests for thruthy', () => {
-    expect(24).toBeTruthy();
+    render(<Button>Hello</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
   });
 });
