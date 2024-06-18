@@ -1,10 +1,14 @@
+import { BrowserRouter } from 'react-router-dom';
+import AppRouter from 'routes';
 import GlobalStyles from 'styles/gobal';
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <h1>Vite + React</h1>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
   );
 }
