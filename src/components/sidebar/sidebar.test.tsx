@@ -2,7 +2,7 @@ import { render, screen } from 'tests/TestUtils';
 import Sidebar from './sidebar';
 import { MemoryRouter } from 'react-router-dom';
 
-describe.only('Test the sidebar component', () => {
+describe('Test the sidebar component', () => {
   it('Renders the sidebar component properly', () => {
     render(
       <MemoryRouter initialEntries={['/dashboard']}>
