@@ -27,6 +27,7 @@ body {
   font-size: 1.6rem;
   min-height: 100vh;
   font-family: "Raleway", sans-serif;
+  background-color: var(--background-color);
 }
 
 ul {
