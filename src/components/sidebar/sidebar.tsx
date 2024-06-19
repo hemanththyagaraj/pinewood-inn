@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const StyledSidebar = styled.aside`
-  width: 30vw;
+  background-color: aqua;
+  grid-row: 1/-1;
 `;
 
 const Sidebar = () => {
