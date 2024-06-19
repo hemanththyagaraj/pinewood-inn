@@ -1,5 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  HiOutlineHome,
+  HiOutlineHomeModern,
+  HiOutlineCalendarDays,
+  HiOutlineCog6Tooth,
+  HiOutlineUserCircle,
+} from 'react-icons/hi2';
 
 const StyledSidebar = styled.aside`
   grid-row: 1/-1;
@@ -25,16 +32,23 @@ const StyledNavLink = styled(NavLink)`
   color: var(--primary-text-color);
   text-decoration: none;
   padding: 2rem;
-  display: block;
-  font-size: 2rem;
+  font-size: 2.5rem;
   border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
   &.active {
     background-color: var(--primary-green);
+    color: var(--primary-brown);
+    & .icon {
+      border-radius: 50%;
+    }
   }
 
   &:hover {
     background-color: var(--primary-green);
+    color: var(--primary-brown);
   }
 `;
 
@@ -43,11 +57,26 @@ const Sidebar = () => {
     <StyledSidebar>
       <Logo src="/logo.png" />
       <Nav>
-        <StyledNavLink to="/dashboard">Dashboard</StyledNavLink>
-        <StyledNavLink to="/bookings">Bookins</StyledNavLink>
-        <StyledNavLink to="/cabins">Cabins</StyledNavLink>
-        <StyledNavLink to="/users">Users</StyledNavLink>
-        <StyledNavLink to="/settings">Settings</StyledNavLink>
+        <StyledNavLink to="/dashboard">
+          <HiOutlineHome className="icon" />
+          Home
+        </StyledNavLink>
+        <StyledNavLink to="/bookings">
+          <HiOutlineCalendarDays className="icon" />
+          Bookings
+        </StyledNavLink>
+        <StyledNavLink to="/cabins">
+          <HiOutlineHomeModern className="icon" />
+          Cabins
+        </StyledNavLink>
+        <StyledNavLink to="/users">
+          <HiOutlineUserCircle className="icon" />
+          Users
+        </StyledNavLink>
+        <StyledNavLink to="/settings">
+          <HiOutlineCog6Tooth className="icon" />
+          Settings
+        </StyledNavLink>
       </Nav>
     </StyledSidebar>
   );
