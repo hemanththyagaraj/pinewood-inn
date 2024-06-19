@@ -54,26 +54,26 @@ const StyledNavLink = styled(NavLink)`
 
 const Sidebar = () => {
   return (
-    <StyledSidebar>
+    <StyledSidebar role="complementary">
       <Logo src="/logo.png" />
-      <Nav>
-        <StyledNavLink to="/dashboard">
+      <Nav role="navigation">
+        <StyledNavLink role="link" to="/dashboard">
           <HiOutlineHome className="icon" />
           Home
         </StyledNavLink>
-        <StyledNavLink to="/bookings">
+        <StyledNavLink role="link" to="/bookings">
           <HiOutlineCalendarDays className="icon" />
           Bookings
         </StyledNavLink>
-        <StyledNavLink to="/cabins">
+        <StyledNavLink role="link" to="/cabins">
           <HiOutlineHomeModern className="icon" />
           Cabins
         </StyledNavLink>
-        <StyledNavLink to="/users">
+        <StyledNavLink role="link" to="/users">
           <HiOutlineUserCircle className="icon" />
           Users
         </StyledNavLink>
-        <StyledNavLink to="/settings">
+        <StyledNavLink role="link" to="/settings">
           <HiOutlineCog6Tooth className="icon" />
           Settings
         </StyledNavLink>
