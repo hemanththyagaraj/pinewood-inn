@@ -17,6 +17,10 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="bookings" element={<Dashboard />} />
+        <Route path="cabins" element={<Dashboard />} />
+        <Route path="users" element={<Dashboard />} />
+        <Route path="settings" element={<Dashboard />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
