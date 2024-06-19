@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledNavbar = styled.header`
-  background-color: rebeccapurple;
+  padding: 2rem;
 `;
 
 const Navbar = () => {

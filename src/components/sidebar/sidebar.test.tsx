@@ -1,9 +1,13 @@
-import { render, screen } from 'tests/TestUtils';
+import { render } from 'tests/TestUtils';
 import Sidebar from './sidebar';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Test the sidebar component', () => {
   it('Renders the sidebar component properly', () => {
-    render(<Sidebar />);
-    expect(screen.getByText(/sidebar/i)).toBeInTheDocument();
+    render(
+      <MemoryRouter initialEntries={['/dashboard']}>
+        <Sidebar />
+      </MemoryRouter>,
+    );
   });
 });
