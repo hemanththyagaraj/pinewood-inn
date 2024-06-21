@@ -25,14 +25,14 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   padding: 5rem 0;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const StyledNavLink = styled(NavLink)`
   color: var(--primary-text-color);
   text-decoration: none;
-  padding: 2rem;
-  font-size: 2.5rem;
+  padding: 1.5rem;
+  font-size: 2rem;
   border-radius: 1rem;
   display: flex;
   align-items: center;
