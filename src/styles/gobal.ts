@@ -6,8 +6,8 @@ const GlobalStyles = createGlobalStyle`
   --primary-brown: #564831;
   --bg-color: #222422;
   --secondary-bg-color: #2f312e;
-  --primary-text-color: #ffffff; /* White */
-  --secondary-text-color: #b0b0b0; /* Light Grey */
+  --primary-text-color: #b0b0b0; /* Light Grey */
+  --secondary-text-color: #ffffff; /* White */
   --success-text-color: #a8e6a3; /* Light Green */
   --error-text-color: #ff5252;
 }
@@ -29,7 +29,8 @@ body {
   font-size: 1.6rem;
   min-height: 100vh;
   font-family: "Raleway", sans-serif;
-  background-color: var(--bg-color)
+  background-color: var(--bg-color);
+  color: var(--primary-text-color);
 }
 
 ul {

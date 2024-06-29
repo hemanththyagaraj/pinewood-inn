@@ -4,6 +4,8 @@ import ProtectedRoute from './protected-route';
 import MainLayout from 'layouts';
 import Dashboard from 'pages/dashboard';
 import NotFound from 'pages/not-found';
+import Cabins from 'pages/cabins';
+import Bookings from 'pages/bookings';
 
 const AppRouter = () => {
   return (
@@ -17,8 +19,8 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="bookings" element={<Dashboard />} />
-        <Route path="cabins" element={<Dashboard />} />
+        <Route path="bookings" element={<Bookings />} />
+        <Route path="cabins" element={<Cabins />} />
         <Route path="users" element={<Dashboard />} />
         <Route path="settings" element={<Dashboard />} />
       </Route>
