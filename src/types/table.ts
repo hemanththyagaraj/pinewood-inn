@@ -1,14 +1,10 @@
-interface DataSource {
-  [key: string]: unknown;
-}
-
-interface Column {
+export interface Column {
   key: string;
   render?: (text: string) => React.ReactNode;
   title: string;
 }
 
-export interface TableProps {
+export interface TableProps<T> {
   columns: Column[];
-  data: DataSource[];
+  data: T[];
 }

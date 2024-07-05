@@ -33,14 +33,13 @@ const StyledBody = styled.tbody`
   }
 `;
 
-// const StyledCell = styled.td`
-//   text-align: center;
-//   padding: 2rem;
-// `;
+const StyledCell = styled.td`
+  text-align: center;
+  padding: 2rem;
+`;
 
-const Table = (props: TableProps) => {
+const Table = <T extends { id: string }>(props: TableProps<T>) => {
   const { data, columns } = props;
-  console.log(data);
   return (
     <StyledTable>
       <StyledHead>
@@ -51,13 +50,15 @@ const Table = (props: TableProps) => {
         </StyledRow>
       </StyledHead>
       <StyledBody>
-        {/* {data?.map((row) => (
-          <StyledRow>
-            {columns.map((cell) => (
-              <StyledCell>{row[cell.key]}</StyledCell>
-            ))}
+        {data?.map((row, rowIndex) => (
+          <StyledRow key={row?.id ?? rowIndex}>
+            {columns.map((cell) => {
+              const { key, render } = cell;
+              const cellData = (row[key as keyof T] as string) ?? EMPTY_TEXT;
+              return <StyledCell>{render?.(cellData) ?? cellData}</StyledCell>;
+            })}
           </StyledRow>
-        ))} */}
+        ))}
       </StyledBody>
     </StyledTable>
   );
