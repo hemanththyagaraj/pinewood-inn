@@ -16,15 +16,21 @@ const StyledHead = styled.thead`
   border-radius: 2px;
 `;
 
-const StyledRow = styled.tr``;
+const StyledRow = styled.tr`
+  &:hover {
+    background: var(--secondary-bg-color);
+  }
+`;
 
 const StyledHeaderCell = styled.th`
   padding: 2rem;
 `;
 
 const StyledBody = styled.tbody`
-  & tr {
-    border-bottom: 2px solid var(--secondary-bg-color);
+  background: var(--secondary-bg-color);
+
+  & tr:not(:last-child) {
+    border-bottom: 2px solid var(--bg-color);
   }
 `;
 
