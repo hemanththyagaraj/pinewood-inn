@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import AppRouter from 'routes';
-import GlobalStyles from 'styles/gobal';
+import GlobalStyles from 'styles/global';
 
 import 'react-toastify/dist/ReactToastify.css';
 
