@@ -29,7 +29,7 @@ const Nav = styled.nav`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  color: var(--primary-text-color);
+  color: var(--grey);
   text-decoration: none;
   padding: 1.5rem;
   font-size: 2rem;
@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
 
   &.active {
     background-color: var(--primary-green);
-    color: var(--primary-brown);
+    color: var(--white);
     & .icon {
       border-radius: 50%;
     }
@@ -48,7 +48,7 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover {
     background-color: var(--primary-green);
-    color: var(--primary-brown);
+    color: var(--white);
   }
 `;
 
