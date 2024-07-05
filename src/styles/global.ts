@@ -2,14 +2,14 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 :root { 
-  --primary-green: rgb(121, 151, 111);
-  --primary-brown: rgb(86, 72, 49);
-  --bg-color: rgb(34, 36, 34);
-  --secondary-bg-color: rgb(47, 49, 46);
-  --primary-text-color: rgb(176, 176, 176); /* Light Grey */
-  --secondary-text-color: rgb(255, 255, 255); /* White */
-  --success-text-color: rgb(168, 230, 163); /* Light Green */
-  --error-text-color: rgb(255, 82, 82);
+  --primary-green: #79976f;
+  --primary-brown: #564831;
+  --bg-color: #222422;
+  --secondary-bg-color: #2f312e;
+  --primary-text-color: #b0b0b0; /* Light Grey */
+  --secondary-text-color: #ffffff; /* White */
+  --success-text-color: #a8e6a3; /* Light Green */
+  --error-text-color: #ff5252;
 }
 
 *,

@@ -13,23 +13,18 @@ const StyledTable = styled.table`
 
 const StyledHead = styled.thead`
   background-color: var(--primary-green);
+  border-radius: 2px;
 `;
 
-const StyledRow = styled.tr`
-  /* border: 1px solid red; */
-`;
+const StyledRow = styled.tr``;
 
 const StyledHeaderCell = styled.th`
   padding: 2rem;
 `;
 
 const StyledBody = styled.tbody`
-  & tr:nth-child(even) {
-    background-color: var(--secondary-bg-color);
-  }
-
-  & tr:nth-child(odd) {
-    background-color: var(--secondary-bg-color);
+  & tr {
+    border-bottom: 2px solid var(--secondary-bg-color);
   }
 `;
 
@@ -45,7 +40,9 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
       <StyledHead>
         <StyledRow>
           {columns?.map((header) => (
-            <StyledHeaderCell>{header?.title ?? EMPTY_TEXT}</StyledHeaderCell>
+            <StyledHeaderCell key={header.key}>
+              {header?.title ?? EMPTY_TEXT}
+            </StyledHeaderCell>
           ))}
         </StyledRow>
       </StyledHead>
@@ -55,7 +52,11 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
             {columns.map((cell) => {
               const { key, render } = cell;
               const cellData = (row[key as keyof T] as string) ?? EMPTY_TEXT;
-              return <StyledCell>{render?.(cellData) ?? cellData}</StyledCell>;
+              return (
+                <StyledCell key={key}>
+                  {render?.(cellData) ?? cellData}
+                </StyledCell>
+              );
             })}
           </StyledRow>
         ))}
