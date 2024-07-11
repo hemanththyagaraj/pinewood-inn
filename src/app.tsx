@@ -7,6 +7,7 @@ import AppRouter from 'routes';
 import GlobalStyles from 'styles/gobal';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { StyleSheetManager } from 'styled-components';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,12 +21,14 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <GlobalStyles />
-        <ToastContainer hideProgressBar autoClose={3000} />
-        <BrowserRouter>
-          <AppRouter />
-        </BrowserRouter>
+        <StyleSheetManager shouldForwardProp={() => true}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <GlobalStyles />
+          <ToastContainer hideProgressBar autoClose={3000} />
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+        </StyleSheetManager>
       </QueryClientProvider>
     </>
   );

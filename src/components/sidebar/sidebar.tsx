@@ -55,7 +55,7 @@ const StyledNavLink = styled(NavLink)`
 const Sidebar = () => {
   return (
     <StyledSidebar role="complementary">
-      <Logo src="/logo.png" />
+      <Logo src="/logo.png" alt="Pinewood-Inn Logo" tabIndex={0} />
       <Nav role="navigation">
         <StyledNavLink role="link" to="/dashboard">
           <HiOutlineHome className="icon" />

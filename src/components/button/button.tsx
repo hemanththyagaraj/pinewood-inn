@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'filled' | 'outlined';
 }
@@ -47,8 +47,11 @@ const StyledButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
   &:disabled {
-    background-color: var(--grey);
+    background-color: ${(props) =>
+      props.variant !== 'text' ? 'var(--grey)' : 'transparent'};
     cursor: default;
+    color: ${(props) =>
+      props.variant !== 'text' ? 'var(--primary-green)' : 'var(--grey)'};
   }
   ${(props) => sizes[props?.size ?? 'small']}
   ${(props) => variant[props?.variant ?? 'filled']}
