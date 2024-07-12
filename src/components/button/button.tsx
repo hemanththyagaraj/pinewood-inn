@@ -46,6 +46,8 @@ const variant = {
 const StyledButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
+  background-color: ${(props) =>
+    props.variant !== 'text' ? 'var(--grey)' : 'transparent'};
   &:disabled {
     background-color: ${(props) =>
       props.variant !== 'text' ? 'var(--grey)' : 'transparent'};
