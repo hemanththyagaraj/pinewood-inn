@@ -1,3 +1,4 @@
+import Pagination from 'components/pagination/pagination';
 import styled from 'styled-components';
 import { TableProps } from 'types/table';
 import { EMPTY_TEXT } from 'utils/constants';
@@ -16,14 +17,11 @@ const StyledHead = styled.thead`
   border-radius: 2px;
 `;
 
-const StyledRow = styled.tr`
-  &:hover {
-    background: var(--secondary-bg-color);
-  }
-`;
+const StyledRow = styled.tr``;
 
 const StyledHeaderCell = styled.th`
   padding: 2rem;
+  color: var(--white);
 `;
 
 const StyledBody = styled.tbody`
@@ -37,10 +35,19 @@ const StyledBody = styled.tbody`
 const StyledCell = styled.td`
   text-align: center;
   padding: 2rem;
+  font-size: 1.8rem;
 `;
+
+const StyledTbodyCell = styled.td`
+  padding: 0;
+`;
+
+const StyledFooter = styled.tfoot``;
 
 const Table = <T extends { id: string }>(props: TableProps<T>) => {
   const { data, columns } = props;
+  const columnCount = columns.length;
+
   return (
     <StyledTable>
       <StyledHead>
@@ -67,6 +74,11 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
           </StyledRow>
         ))}
       </StyledBody>
+      <StyledFooter>
+        <StyledTbodyCell colSpan={columnCount}>
+          <Pagination position="right" />
+        </StyledTbodyCell>
+      </StyledFooter>
     </StyledTable>
   );
 };
