@@ -7,7 +7,14 @@ export interface PaginationProps {
   pageSize?: number;
   onChange?: (page: number) => void;
   disabled?: boolean;
+  position?: 'left' | 'center' | 'right';
 }
+
+const position = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -28,6 +35,9 @@ const StyledButton = styled(Button)<ButtonProps>`
 const StyledNav = styled.nav<PaginationProps>`
   filter: ${(props) => (props.disabled ? 'grayscale(60%)' : 'grayscale(0%)')};
   pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
+  margin: 2rem 0;
+  display: flex;
+  justify-content: ${(props) => position[props?.position ?? 'right']};
 `;
 
 const Pagination = (props: PaginationProps) => {
@@ -37,6 +47,7 @@ const Pagination = (props: PaginationProps) => {
     pageSize = 10,
     onChange,
     disabled = false,
+    position = 'right',
   } = props;
 
   const pageNumberLimit = 5;
@@ -60,6 +71,7 @@ const Pagination = (props: PaginationProps) => {
       role="navigation"
       aria-label="Pagination"
       tabIndex={0}
+      position={position}
     >
       <StyledList role="list">
         <li role="listitem">
