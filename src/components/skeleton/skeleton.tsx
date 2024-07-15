@@ -9,6 +9,7 @@ const Skeleton = (props: SkeletonProps) => {
   } = props;
   return (
     <ReactSkeleton
+      containerTestId="react-skeleton"
       width={width}
       baseColor={baseColor}
       highlightColor={highlightColor}
