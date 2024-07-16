@@ -14,8 +14,7 @@ export const useGetCabins = (options?: UseQueryOptions) => {
     ...options,
     queryKey: ['cabins'],
     queryFn: getCabins,
-    staleTime: 3000,
-    refetchOnWindowFocus: 'always',
+    staleTime: 30000,
   });
 };
 
