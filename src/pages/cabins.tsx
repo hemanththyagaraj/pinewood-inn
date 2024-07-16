@@ -1,11 +1,12 @@
 import Button from 'components/button/button';
 import { Table } from 'components/table';
-import { useGetCabins } from 'services/cabins';
+import { useDeleteCabin, useGetCabins } from 'services/cabins';
 import styled from 'styled-components';
 import { Column } from 'types/table';
 import { HiMiniTrash } from 'react-icons/hi2';
 import { Cabin } from 'types/cabin';
 import { useMemo } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Image = styled.img`
   width: 6rem;
@@ -23,6 +24,8 @@ const DeleteButton = styled(Button)`
 
 const Cabins = () => {
   const { data: cabins, isLoading } = useGetCabins();
+  const { mutate: deleteCabin, isPending: isDeleting } = useDeleteCabin();
+  const queryClient = useQueryClient();
 
   const columns: Column[] = useMemo(
     () => [
@@ -53,7 +56,7 @@ const Cabins = () => {
         key: 'id',
         title: '',
         render: (id) => (
-          <DeleteButton>
+          <DeleteButton onClick={() => handleDelete(id)} disabled={isDeleting}>
             <HiMiniTrash id={id} />
           </DeleteButton>
         ),
@@ -61,6 +64,14 @@ const Cabins = () => {
     ],
     [],
   );
+
+  const handleDelete = (id: string) => {
+    deleteCabin(id, {
+      onSuccess() {
+        queryClient.invalidateQueries();
+      },
+    });
+  };
 
   return (
     <Table isLoading={isLoading} data={cabins as Cabin[]} columns={columns} />

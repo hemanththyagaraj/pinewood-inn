@@ -71,8 +71,8 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
           if (isLoading) {
             return (
               <StyledRow key={rowIndex}>
-                {columns.map(() => (
-                  <StyledCell>
+                {columns.map((_, index) => (
+                  <StyledCell key={index}>
                     <Skeleton />
                   </StyledCell>
                 ))}
