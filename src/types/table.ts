@@ -7,4 +7,5 @@ export interface Column {
 export interface TableProps<T> {
   columns: Column[];
   data: T[];
+  isLoading: boolean;
 }

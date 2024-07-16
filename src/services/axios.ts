@@ -14,8 +14,9 @@ axiosInstance.interceptors.request.use(
     if (authToken) {
       config.headers.Authorization = `Bearer ${authToken}`;
       config.headers.apiKey = authToken;
+    } else {
+      return Promise.reject('Unauthorized user');
     }
-
     return config;
   },
   (error) => {

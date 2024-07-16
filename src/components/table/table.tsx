@@ -1,10 +1,11 @@
 import Pagination from 'components/pagination/pagination';
+import Skeleton from 'components/skeleton/skeleton';
 import styled from 'styled-components';
 import { TableProps } from 'types/table';
 import { EMPTY_TEXT } from 'utils/constants';
 
 const StyledTable = styled.table`
-  table-layout: fixed;
+  table-layout: auto;
   border-collapse: collapse !important;
   width: 100%;
   color: var(--secondary-text-color);
@@ -45,8 +46,14 @@ const StyledTbodyCell = styled.td`
 const StyledFooter = styled.tfoot``;
 
 const Table = <T extends { id: string }>(props: TableProps<T>) => {
-  const { data, columns } = props;
+  const { data, columns, isLoading } = props;
   const columnCount = columns.length;
+
+  const DEFAULT_LOADING_ROWS_COUNT = 5;
+
+  const rows: T[] = isLoading
+    ? Array.from({ length: DEFAULT_LOADING_ROWS_COUNT })
+    : data;
 
   return (
     <StyledTable>
@@ -60,24 +67,39 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
         </StyledRow>
       </StyledHead>
       <StyledBody>
-        {data?.map((row, rowIndex) => (
-          <StyledRow key={row?.id ?? rowIndex}>
-            {columns.map((cell) => {
-              const { key, render } = cell;
-              const cellData = (row[key as keyof T] as string) ?? EMPTY_TEXT;
-              return (
-                <StyledCell key={key}>
-                  {render?.(cellData) ?? cellData}
-                </StyledCell>
-              );
-            })}
-          </StyledRow>
-        ))}
+        {rows?.map((row, rowIndex) => {
+          if (isLoading) {
+            return (
+              <StyledRow key={rowIndex}>
+                {columns.map((_, index) => (
+                  <StyledCell key={index}>
+                    <Skeleton />
+                  </StyledCell>
+                ))}
+              </StyledRow>
+            );
+          }
+          return (
+            <StyledRow key={row?.id ?? rowIndex}>
+              {columns.map((cell) => {
+                const { key, render } = cell;
+                const cellData = (row[key as keyof T] as string) ?? EMPTY_TEXT;
+                return (
+                  <StyledCell key={key}>
+                    {render?.(cellData) ?? cellData}
+                  </StyledCell>
+                );
+              })}
+            </StyledRow>
+          );
+        })}
       </StyledBody>
       <StyledFooter>
-        <StyledTbodyCell colSpan={columnCount}>
-          <Pagination position="right" />
-        </StyledTbodyCell>
+        <StyledRow>
+          <StyledTbodyCell colSpan={columnCount}>
+            <Pagination position="right" />
+          </StyledTbodyCell>
+        </StyledRow>
       </StyledFooter>
     </StyledTable>
   );
