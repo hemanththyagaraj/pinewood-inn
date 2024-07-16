@@ -25,14 +25,14 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   padding: 5rem 0;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const StyledNavLink = styled(NavLink)`
-  color: var(--primary-text-color);
+  color: var(--grey);
   text-decoration: none;
-  padding: 2rem;
-  font-size: 2.5rem;
+  padding: 1.5rem;
+  font-size: 2rem;
   border-radius: 1rem;
   display: flex;
   align-items: center;
@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
 
   &.active {
     background-color: var(--primary-green);
-    color: var(--primary-brown);
+    color: var(--white);
     & .icon {
       border-radius: 50%;
     }
@@ -48,14 +48,14 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover {
     background-color: var(--primary-green);
-    color: var(--primary-brown);
+    color: var(--white);
   }
 `;
 
 const Sidebar = () => {
   return (
     <StyledSidebar role="complementary">
-      <Logo src="/logo.png" />
+      <Logo src="/logo.png" alt="Pinewood-Inn Logo" tabIndex={0} />
       <Nav role="navigation">
         <StyledNavLink role="link" to="/dashboard">
           <HiOutlineHome className="icon" />
