@@ -19,9 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create the env file
-        run: echo "VITE_AUTH_TOKEN=${{ secrets.ANON_AUTH_TOKEN }}" > .env && ls && cat .env
-
       - name: Run lints
         run: npm run lint
 
