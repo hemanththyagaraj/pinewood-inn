@@ -14,10 +14,13 @@ jobs:
       - name: Setup node js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
+
+      - name: Create the env file
+        run: echo ${{ secrets.ANON_AUTH_TOKEN }} > .env && echo "Successfully created the env file"
 
       - name: Run lints
         run: npm run lint
