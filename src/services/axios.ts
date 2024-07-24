@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import { ErrorResponseI } from 'types/base';
+import { ErrorResponse } from 'types/base';
 
 const axiosInstance = axios.create({
   baseURL: 'https://optfawubqmwtbvgwteop.supabase.co/rest/v1',
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
   (response) => response?.data,
   (error: AxiosError) => {
     const message =
-      (error?.response?.data as ErrorResponseI)?.message ?? error.message;
+      (error?.response?.data as ErrorResponse)?.message ?? error.message;
     toast(message, { type: 'error' });
     return Promise.reject(error);
   },

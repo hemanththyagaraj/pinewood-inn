@@ -2,10 +2,10 @@ import Button from 'components/button/button';
 import { Table } from 'components/table';
 import { useDeleteCabin, useGetCabins } from 'services/cabins';
 import styled from 'styled-components';
-import { Column } from 'types/table';
 import { HiMiniTrash } from 'react-icons/hi2';
-import { Cabin } from 'types/cabin';
 import { useQueryClient } from '@tanstack/react-query';
+import { Cabin } from 'types/base';
+import { Column } from 'components/table/table';
 
 const Image = styled.img`
   width: 6rem;
