@@ -5,6 +5,7 @@ import FormField from 'components/form-field/form-field';
 import Input from 'components/input/input';
 import styled from 'styled-components';
 import Button from 'components/button/button';
+import FileInput from 'components/file-input/file-input';
 
 const Actions = styled.div`
   display: flex;
@@ -67,8 +68,13 @@ const CabinForm = (props: CabinFormProps) => {
             })}
           />
         </FormField>
-        <FormField label="Image">
-          <Input type="file" />
+        <FormField label="Image" error={errors?.image?.message}>
+          <FileInput
+            id="cabinImage"
+            {...register('image', {
+              required: 'Cabin image is required',
+            })}
+          />
         </FormField>
         <Actions>
           <Button variant="outlined" size="medium" type="reset">

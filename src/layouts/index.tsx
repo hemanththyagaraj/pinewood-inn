@@ -12,6 +12,7 @@ const StyledMainLayout = styled.div`
 
 const StyledMain = styled.main`
   padding: 2rem;
+  overflow-y: auto;
 `;
 
 const MainLayout = () => {
