@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
@@ -8,7 +8,7 @@ const StyledInput = styled.input`
   border-radius: 0.5rem;
   color: var(--white);
   outline: none;
-  font-size: 2rem;
+  font-size: 1.6rem;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button,
@@ -19,8 +19,13 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  return <StyledInput {...props} />;
-};
+const Input = React.forwardRef(
+  (
+    props: InputHTMLAttributes<HTMLInputElement>,
+    ref: React.ForwardedRef<HTMLInputElement>,
+  ) => {
+    return <StyledInput {...props} ref={ref} />;
+  },
+);
 
 export default Input;

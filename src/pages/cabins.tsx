@@ -1,11 +1,12 @@
 import Button from 'components/button/button';
 import { Table } from 'components/table';
-import { useDeleteCabin, useGetCabins } from 'services/cabins';
+import { useCreateCabin, useDeleteCabin, useGetCabins } from 'services/cabins';
 import styled from 'styled-components';
 import { HiMiniTrash } from 'react-icons/hi2';
 import { useQueryClient } from '@tanstack/react-query';
 import { Cabin } from 'types/base';
 import { Column } from 'components/table/table';
+import CreateCabin from 'components/cabin-form/cabin-form';
 
 const Image = styled.img`
   width: 6rem;
@@ -24,6 +25,7 @@ const DeleteButton = styled(Button)`
 const Cabins = () => {
   const { data: cabins, isLoading } = useGetCabins();
   const { mutate: deleteCabin, isPending: isDeleting } = useDeleteCabin();
+  const { mutate: createCabin } = useCreateCabin();
   const queryClient = useQueryClient();
 
   const handleDelete = (id: string) => {
@@ -69,8 +71,19 @@ const Cabins = () => {
     },
   ];
 
+  const handleCreateCabin = (cabin: Cabin) => {
+    createCabin(cabin, {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+    });
+  };
+
   return (
-    <Table isLoading={isLoading} data={cabins as Cabin[]} columns={columns} />
+    <>
+      <Table isLoading={isLoading} data={cabins as Cabin[]} columns={columns} />
+      <CreateCabin onSubmit={handleCreateCabin} />
+    </>
   );
 };
 
