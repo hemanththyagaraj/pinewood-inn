@@ -10,7 +10,7 @@ export type Cabin = {
   description: string;
   discount: number;
   id: string;
-  image: string;
+  image: string | FileList;
   max_capacity: number;
   name: string;
   regular_price: number;

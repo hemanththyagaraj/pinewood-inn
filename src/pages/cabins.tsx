@@ -1,12 +1,17 @@
 import Button from 'components/button/button';
 import { Table } from 'components/table';
-import { useCreateCabin, useDeleteCabin, useGetCabins } from 'services/cabins';
+import {
+  useCreateCabin,
+  useDeleteCabin,
+  useEditCabin,
+  useGetCabins,
+} from 'services/cabins';
 import styled from 'styled-components';
 import { HiMiniTrash } from 'react-icons/hi2';
-import { useQueryClient } from '@tanstack/react-query';
 import { Cabin } from 'types/base';
 import { Column } from 'components/table/table';
-import CreateCabin from 'components/cabin-form/cabin-form';
+import CabinForm from 'components/cabin-form/cabin-form';
+import { useUploadImage } from 'services/images';
 
 const Image = styled.img`
   width: 6rem;
@@ -26,15 +31,8 @@ const Cabins = () => {
   const { data: cabins, isLoading } = useGetCabins();
   const { mutate: deleteCabin, isPending: isDeleting } = useDeleteCabin();
   const { mutate: createCabin } = useCreateCabin();
-  const queryClient = useQueryClient();
-
-  const handleDelete = (id: string) => {
-    deleteCabin(id, {
-      onSuccess() {
-        queryClient.invalidateQueries();
-      },
-    });
-  };
+  const { mutate: editCabin } = useEditCabin();
+  const { mutate: uploadImage } = useUploadImage();
 
   const columns: Column[] = [
     {
@@ -71,18 +69,32 @@ const Cabins = () => {
     },
   ];
 
-  const handleCreateCabin = (cabin: Cabin) => {
-    createCabin(cabin, {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    });
+  const handleDelete = (id: string) => {
+    deleteCabin(id);
+  };
+
+  const handleSubmit = (cabin: Cabin) => {
+    const { image } = cabin;
+    const isEditSession = !!cabin?.id;
+
+    if (typeof image === 'object') {
+      return uploadImage(image[0], {
+        onSuccess() {
+          const imageUrl = `${import.meta.env.VITE_BASE_URL}/storage/v1/object/public/the_pinewood_inn/${image[0].name}`;
+          isEditSession
+            ? editCabin({ ...cabin, image: imageUrl })
+            : createCabin({ ...cabin, image: imageUrl });
+        },
+      });
+    }
+
+    isEditSession ? editCabin(cabin) : createCabin(cabin);
   };
 
   return (
     <>
       <Table isLoading={isLoading} data={cabins as Cabin[]} columns={columns} />
-      <CreateCabin onSubmit={handleCreateCabin} />
+      {false && <CabinForm onSubmit={handleSubmit} />}
     </>
   );
 };

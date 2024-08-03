@@ -1,6 +1,7 @@
 import { UseQueryOptions, useMutation, useQuery } from '@tanstack/react-query';
-import axiosInstance from './axios';
+import axiosInstance from '../lib/axios';
 import { Cabin } from 'types/base';
+import { queryClient } from 'lib/query-client';
 
 const getCabins = () => {
   return axiosInstance.get('/cabins?select=*');
@@ -12,6 +13,10 @@ const deleteCabin = (id: string) => {
 
 const createCabin = (cabin: Cabin) => {
   return axiosInstance.post('/cabins', cabin);
+};
+
+const editCabin = (cabin: Cabin) => {
+  return axiosInstance.patch(`/cabins?id=eq.${cabin.id}`, cabin);
 };
 
 export const useGetCabins = (options?: UseQueryOptions) => {
@@ -26,11 +31,26 @@ export const useGetCabins = (options?: UseQueryOptions) => {
 export const useDeleteCabin = () => {
   return useMutation({
     mutationFn: (id: string) => deleteCabin(id),
+    onSuccess() {
+      queryClient.invalidateQueries();
+    },
   });
 };
 
 export const useCreateCabin = () => {
   return useMutation({
     mutationFn: (cabin: Cabin) => createCabin(cabin),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+};
+
+export const useEditCabin = () => {
+  return useMutation({
+    mutationFn: (cabin: Cabin) => editCabin(cabin),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
   });
 };

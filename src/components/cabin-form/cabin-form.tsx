@@ -15,19 +15,31 @@ const Actions = styled.div`
 
 type CabinFormProps = {
   onSubmit: (cabin: Cabin) => void;
+  cabin?: Cabin;
 };
 
 const CabinForm = (props: CabinFormProps) => {
-  const { onSubmit: onFormSubmit } = props;
+  const { onSubmit: onFormSubmit, cabin: defaultCabin } = props;
+
+  const isEdit = !!defaultCabin?.id;
+
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Cabin>();
+  } = useForm<Cabin>({
+    defaultValues: defaultCabin,
+  });
 
   const onSubmit = (cabin: Cabin) => {
-    onFormSubmit(cabin);
+    onFormSubmit({
+      ...cabin,
+      image:
+        typeof cabin.image === 'object' && cabin.image.length
+          ? cabin.image
+          : defaultCabin?.image ?? '',
+    });
   };
 
   return (
@@ -55,6 +67,7 @@ const CabinForm = (props: CabinFormProps) => {
             id="regularPrice"
             {...register('regular_price', {
               required: 'Cabin must have a regular price.',
+              valueAsNumber: true,
             })}
             type="number"
           />
@@ -65,6 +78,7 @@ const CabinForm = (props: CabinFormProps) => {
             type="number"
             {...register('discount', {
               required: 'Cabin must have a discount.',
+              valueAsNumber: true,
             })}
           />
         </FormField>
@@ -72,8 +86,9 @@ const CabinForm = (props: CabinFormProps) => {
           <FileInput
             id="cabinImage"
             {...register('image', {
-              required: 'Cabin image is required',
+              required: false,
             })}
+            src={(defaultCabin?.image as string) ?? ''}
           />
         </FormField>
         <Actions>
@@ -81,7 +96,7 @@ const CabinForm = (props: CabinFormProps) => {
             Cancel
           </Button>
           <Button size="medium" type="submit">
-            Create New Cabin
+            {isEdit ? 'Edit' : 'Create New'} Cabin
           </Button>
         </Actions>
       </form>

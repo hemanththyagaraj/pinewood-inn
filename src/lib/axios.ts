@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { ErrorResponse } from 'types/base';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://optfawubqmwtbvgwteop.supabase.co/rest/v1',
+  baseURL: `${import.meta.env.VITE_BASE_URL}/rest/v1`,
   timeout: 5000,
 });
 
