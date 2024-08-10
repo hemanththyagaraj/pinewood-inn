@@ -1,5 +1,5 @@
 import { UseQueryOptions, useQuery } from '@tanstack/react-query';
-import axiosInstance from './axios';
+import axiosInstance from '../lib/axios';
 
 export const useGetBookings = (options?: UseQueryOptions) => {
   return useQuery({

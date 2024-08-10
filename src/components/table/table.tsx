@@ -1,8 +1,19 @@
 import Pagination from 'components/pagination/pagination';
 import Skeleton from 'components/skeleton/skeleton';
 import styled from 'styled-components';
-import { TableProps } from 'types/table';
 import { EMPTY_TEXT } from 'utils/constants';
+
+export type Column = {
+  key: string;
+  render?: (text: string) => React.ReactNode;
+  title: string;
+};
+
+type TableProps<T> = {
+  columns: Column[];
+  data: T[];
+  isLoading: boolean;
+};
 
 const StyledTable = styled.table`
   table-layout: auto;
