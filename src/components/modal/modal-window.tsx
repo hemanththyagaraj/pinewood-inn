@@ -40,8 +40,12 @@ const ModalWindow = (props: PropsWithChildren) => {
 
   return createPortal(
     <Overlay>
-      <StyledModal>
-        <StyledSvg onClick={toggleOpen} />
+      <StyledModal role="dialog">
+        <StyledSvg
+          role="button"
+          onClick={toggleOpen}
+          aria-label="Close Modal"
+        />
         {props.children}
       </StyledModal>
     </Overlay>,

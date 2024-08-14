@@ -13,7 +13,7 @@ export const ModalContext = createContext<ModalContext>({
 });
 
 const Modal = (props: PropsWithChildren) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => {
     setOpen((open) => !open);
