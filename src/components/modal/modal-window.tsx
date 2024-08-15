@@ -3,6 +3,7 @@ import { ModalContext } from './modal';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
+import useOutsideClick from 'hooks/use-outside-click';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -36,11 +37,13 @@ const StyledSvg = styled(HiXMark)`
 const ModalWindow = (props: PropsWithChildren) => {
   const { open, toggleOpen } = useContext(ModalContext);
 
+  const ref = useOutsideClick<HTMLDivElement>(toggleOpen);
+
   if (!open) return null;
 
   return createPortal(
-    <Overlay>
-      <StyledModal role="dialog">
+    <Overlay aria-label="Modal Overlay">
+      <StyledModal ref={ref} role="dialog">
         <StyledSvg
           role="button"
           onClick={toggleOpen}
