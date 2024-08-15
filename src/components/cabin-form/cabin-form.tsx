@@ -13,6 +13,11 @@ const Actions = styled.div`
   gap: 1.5rem;
 `;
 
+const StyledForm = styled.form`
+  min-width: 40vw;
+  margin: 2rem;
+`;
+
 type CabinFormProps = {
   onSubmit: (cabin: Cabin) => void;
   cabin?: Cabin;
@@ -44,7 +49,7 @@ const CabinForm = (props: CabinFormProps) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <FormField label="Name" error={errors?.name?.message}>
           <Input
             id="name"
@@ -99,7 +104,7 @@ const CabinForm = (props: CabinFormProps) => {
             {isEdit ? 'Edit' : 'Create New'} Cabin
           </Button>
         </Actions>
-      </form>
+      </StyledForm>
       <DevTool control={control} />
     </>
   );
