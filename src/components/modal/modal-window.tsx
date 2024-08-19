@@ -34,7 +34,12 @@ const StyledSvg = styled(HiXMark)`
   cursor: pointer;
 `;
 
-const ModalWindow = (props: PropsWithChildren) => {
+type ModalWindowProps = {
+  render?: (toggleOpen: () => void) => void;
+} & PropsWithChildren;
+
+const ModalWindow = (props: ModalWindowProps) => {
+  const { render, children } = props;
   const { open, toggleOpen } = useContext(ModalContext);
 
   const ref = useOutsideClick<HTMLDivElement>(toggleOpen);
@@ -49,7 +54,7 @@ const ModalWindow = (props: PropsWithChildren) => {
           onClick={toggleOpen}
           aria-label="Close Modal"
         />
-        {props.children}
+        {render?.(toggleOpen) ?? children}
       </StyledModal>
     </Overlay>,
     document.body,

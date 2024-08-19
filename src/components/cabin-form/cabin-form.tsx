@@ -21,10 +21,11 @@ const StyledForm = styled.form`
 type CabinFormProps = {
   onSubmit: (cabin: Cabin) => void;
   cabin?: Cabin;
+  onCancel?: () => void;
 };
 
 const CabinForm = (props: CabinFormProps) => {
-  const { onSubmit: onFormSubmit, cabin: defaultCabin } = props;
+  const { onSubmit: onFormSubmit, cabin: defaultCabin, onCancel } = props;
 
   const isEdit = !!defaultCabin?.id;
 
@@ -97,7 +98,12 @@ const CabinForm = (props: CabinFormProps) => {
           />
         </FormField>
         <Actions>
-          <Button variant="outlined" size="medium" type="reset">
+          <Button
+            variant="outlined"
+            size="medium"
+            type="reset"
+            onClick={onCancel}
+          >
             Cancel
           </Button>
           <Button size="medium" type="submit">

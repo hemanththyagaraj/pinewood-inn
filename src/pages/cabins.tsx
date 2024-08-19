@@ -8,9 +8,11 @@ import {
 } from 'services/cabins';
 import styled from 'styled-components';
 import { HiMiniTrash } from 'react-icons/hi2';
+import { HiPencil } from 'react-icons/hi2';
 import { Cabin } from 'types/base';
 import { Column } from 'components/table/table';
 import CabinForm from 'components/cabin-form/cabin-form';
+import Modal from 'components/modal/modal';
 import { useUploadImage } from 'services/images';
 
 const Image = styled.img`
@@ -27,6 +29,32 @@ const DeleteButton = styled(Button)`
   background-color: var(--error-text-color);
 `;
 
+const columns: Column<Cabin>[] = [
+  {
+    key: 'image',
+    title: '',
+    render: (text) => <Image src={text} />,
+  },
+  {
+    key: 'name',
+    title: 'Cabin',
+  },
+  {
+    key: 'max_capacity',
+    title: 'Capacity',
+    render: (text) => <>Fits upto {text} people</>,
+  },
+  {
+    key: 'regular_price',
+    title: 'Price',
+  },
+  {
+    key: 'discount',
+    title: 'Discount',
+    render: (text) => <Price>₹{text}</Price>,
+  },
+];
+
 const Cabins = () => {
   const { data: cabins, isLoading } = useGetCabins();
   const { mutate: deleteCabin, isPending: isDeleting } = useDeleteCabin();
@@ -34,44 +62,43 @@ const Cabins = () => {
   const { mutate: editCabin } = useEditCabin();
   const { mutate: uploadImage } = useUploadImage();
 
-  const columns: Column[] = [
-    {
-      key: 'image',
-      title: '',
-      render: (text) => <Image src={text} />,
-    },
-    {
-      key: 'name',
-      title: 'Cabin',
-    },
-    {
-      key: 'max_capacity',
-      title: 'Capacity',
-      render: (text) => <>Fits upto {text} people</>,
-    },
-    {
-      key: 'regular_price',
-      title: 'Price',
-    },
-    {
-      key: 'discount',
-      title: 'Discount',
-      render: (text) => <Price>₹{text}</Price>,
-    },
+  console.log(deleteCabin);
+
+  const cabinColumns: Column<Cabin>[] = [
+    ...columns,
     {
       key: 'id',
       title: '',
-      render: (id) => (
-        <DeleteButton onClick={() => handleDelete(id)} disabled={isDeleting}>
-          <HiMiniTrash id={id} />
-        </DeleteButton>
+      render: (id, cabin) => (
+        <>
+          <Modal>
+            <Modal.Open
+              render={(toggleOpen) => (
+                <DeleteButton onClick={toggleOpen} disabled={isDeleting}>
+                  <HiMiniTrash id={id} />
+                </DeleteButton>
+              )}
+            />
+            <Modal.Window>
+              <CabinForm onSubmit={() => {}} />
+            </Modal.Window>
+          </Modal>
+          <Modal>
+            <Modal.Open
+              render={(toggleOpen) => (
+                <Button onClick={toggleOpen} disabled={isDeleting}>
+                  <HiPencil id={id} />
+                </Button>
+              )}
+            />
+            <Modal.Window>
+              <CabinForm onSubmit={handleSubmit} cabin={cabin as Cabin} />
+            </Modal.Window>
+          </Modal>
+        </>
       ),
     },
   ];
-
-  const handleDelete = (id: string) => {
-    deleteCabin(id);
-  };
 
   const handleSubmit = (cabin: Cabin) => {
     const { image } = cabin;
@@ -93,8 +120,25 @@ const Cabins = () => {
 
   return (
     <>
-      <Table isLoading={isLoading} data={cabins as Cabin[]} columns={columns} />
-      {false && <CabinForm onSubmit={handleSubmit} />}
+      <Modal>
+        <Modal.Open
+          render={(toggleOpen) => (
+            <Button size="medium" onClick={toggleOpen}>
+              Create New Cabin
+            </Button>
+          )}
+        />
+        <Modal.Window
+          render={(toggleOpen) => (
+            <CabinForm onSubmit={handleSubmit} onCancel={toggleOpen} />
+          )}
+        />
+      </Modal>
+      <Table
+        isLoading={isLoading}
+        data={cabins as Cabin[]}
+        columns={cabinColumns}
+      />
     </>
   );
 };
