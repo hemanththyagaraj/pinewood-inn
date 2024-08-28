@@ -3,14 +3,14 @@ import Skeleton from 'components/skeleton/skeleton';
 import styled from 'styled-components';
 import { EMPTY_TEXT } from 'utils/constants';
 
-export type Column = {
+export type Column<T> = {
   key: string;
-  render?: (text: string) => React.ReactNode;
+  render?: (text: string, data?: T) => React.ReactNode;
   title: string;
 };
 
 type TableProps<T> = {
-  columns: Column[];
+  columns: Column<T>[];
   data: T[];
   isLoading: boolean;
 };
@@ -97,7 +97,7 @@ const Table = <T extends { id: string }>(props: TableProps<T>) => {
                 const cellData = (row[key as keyof T] as string) ?? EMPTY_TEXT;
                 return (
                   <StyledCell key={key}>
-                    {render?.(cellData) ?? cellData}
+                    {render?.(cellData, row) ?? cellData}
                   </StyledCell>
                 );
               })}

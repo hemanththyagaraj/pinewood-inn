@@ -2,6 +2,7 @@ import { MutableRefObject, useEffect, useRef } from 'react';
 
 const useOutsideClick = <T extends HTMLElement>(
   handleOutsideClick?: () => void,
+  listenCapturing: boolean = true,
 ): MutableRefObject<T | null> => {
   const ref = useRef<T | null>(null);
 
@@ -12,12 +13,12 @@ const useOutsideClick = <T extends HTMLElement>(
       }
     };
 
-    window.addEventListener('click', handleClick, true);
+    window.addEventListener('click', handleClick, listenCapturing);
 
     return () => {
-      window.removeEventListener('click', handleClick, true);
+      window.removeEventListener('click', handleClick, listenCapturing);
     };
-  }, [handleOutsideClick]);
+  }, [handleOutsideClick, listenCapturing]);
 
   return ref;
 };

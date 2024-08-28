@@ -1,14 +1,9 @@
-import { useContext } from 'react';
-import { ModalContext } from './modal';
+import { PropsWithChildren } from 'react';
 
-type ModalOpenProps = {
-  render: (toggleOpen: () => void) => void;
-};
+const ModelOpen = (props: PropsWithChildren) => {
+  const { children } = props;
 
-const ModelOpen = (props: ModalOpenProps) => {
-  const { toggleOpen } = useContext(ModalContext);
-
-  return <>{props?.render(toggleOpen)}</>;
+  return <>{children}</>;
 };
 
 export default ModelOpen;

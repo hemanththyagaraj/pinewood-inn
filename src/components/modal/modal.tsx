@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from 'react';
+import { createContext, PropsWithChildren } from 'react';
 import ModelOpen from './modal-open';
 import ModalWindow from './modal-window';
 
@@ -7,20 +7,21 @@ type ModalContext = {
   toggleOpen: () => void;
 };
 
-export const ModalContext = createContext<ModalContext>({
-  open: false,
-  toggleOpen: () => {},
+type ModalProps = {
+  isOpen?: boolean;
+  onClose?: () => void;
+} & PropsWithChildren;
+
+export const ModalContext = createContext<ModalProps>({
+  isOpen: false,
+  onClose: () => {},
 });
 
-const Modal = (props: PropsWithChildren) => {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const toggleOpen = () => {
-    setOpen((open) => !open);
-  };
+const Modal = (props: ModalProps) => {
+  const { isOpen, onClose } = props;
 
   return (
-    <ModalContext.Provider value={{ open, toggleOpen }}>
+    <ModalContext.Provider value={{ isOpen, onClose }}>
       {props.children}
     </ModalContext.Provider>
   );

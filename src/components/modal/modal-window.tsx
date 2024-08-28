@@ -12,7 +12,7 @@ const StyledModal = styled.div`
   transform: translate(-50%, -50%);
   color: var(--white);
   background-color: var(--secondary-bg-color);
-  padding: 2rem;
+  padding: 2rem 4rem;
   border-radius: 1rem;
 `;
 
@@ -26,30 +26,32 @@ const Overlay = styled.div`
   backdrop-filter: blur(0.4rem);
 `;
 
+const ModalClose = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const StyledSvg = styled(HiXMark)`
   width: 2.5rem;
   height: 2.5rem;
-  position: absolute;
-  right: 2rem;
   cursor: pointer;
 `;
 
 const ModalWindow = (props: PropsWithChildren) => {
-  const { open, toggleOpen } = useContext(ModalContext);
+  const { children } = props;
+  const { isOpen, onClose } = useContext(ModalContext);
 
-  const ref = useOutsideClick<HTMLDivElement>(toggleOpen);
+  const ref = useOutsideClick<HTMLDivElement>(onClose);
 
-  if (!open) return null;
+  if (!isOpen) return null;
 
   return createPortal(
     <Overlay aria-label="Modal Overlay">
       <StyledModal ref={ref} role="dialog">
-        <StyledSvg
-          role="button"
-          onClick={toggleOpen}
-          aria-label="Close Modal"
-        />
-        {props.children}
+        <ModalClose>
+          <StyledSvg role="button" onClick={onClose} aria-label="Close Modal" />
+        </ModalClose>
+        {children}
       </StyledModal>
     </Overlay>,
     document.body,

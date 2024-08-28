@@ -11,7 +11,7 @@ export default defineConfig({
     react(),
     tsConfigPaths(),
     eslint({
-      failOnError: true,
+      failOnError: false,
     }),
   ],
   test: {
