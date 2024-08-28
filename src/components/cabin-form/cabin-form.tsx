@@ -6,6 +6,9 @@ import Input from 'components/input/input';
 import styled from 'styled-components';
 import Button from 'components/button/button';
 import FileInput from 'components/file-input/file-input';
+import { useCreateCabin, useEditCabin } from 'services/cabins';
+import { useUploadImage } from 'services/images';
+import { toast } from 'react-toastify';
 
 const Actions = styled.div`
   display: flex;
@@ -19,13 +22,13 @@ const StyledForm = styled.form`
 `;
 
 type CabinFormProps = {
-  onSubmit: (cabin: Cabin) => void;
+  onSubmitSuccess: () => void;
   cabin?: Cabin;
   onCancel?: () => void;
 };
 
 const CabinForm = (props: CabinFormProps) => {
-  const { onSubmit: onFormSubmit, cabin: defaultCabin, onCancel } = props;
+  const { onSubmitSuccess, cabin: defaultCabin, onCancel } = props;
 
   const isEdit = !!defaultCabin?.id;
 
@@ -38,14 +41,46 @@ const CabinForm = (props: CabinFormProps) => {
     defaultValues: defaultCabin,
   });
 
+  const { mutate: createCabin, isPending: isCreating } = useCreateCabin();
+  const { mutate: updateCabin, isPending: isUpdating } = useEditCabin();
+  const { mutate: uploadImage, isPending: isUploading } = useUploadImage();
+  const isEditSession = !!defaultCabin;
+
+  const handleSuccess = () => {
+    toast.success(`Successfully ${isEditSession ? 'edited' : 'created'}`);
+    onSubmitSuccess();
+  };
+
   const onSubmit = (cabin: Cabin) => {
-    onFormSubmit({
-      ...cabin,
-      image:
-        typeof cabin.image === 'object' && cabin.image.length
-          ? cabin.image
-          : defaultCabin?.image ?? '',
-    });
+    const { image } = cabin;
+
+    if (typeof image === 'object') {
+      return uploadImage(image[0], {
+        onSuccess() {
+          const imageUrl = `${import.meta.env.VITE_BASE_URL}/storage/v1/object/public/the_pinewood_inn/${image[0].name}`;
+          isEditSession
+            ? updateCabin(
+                { ...cabin, image: imageUrl },
+                {
+                  onSuccess: handleSuccess,
+                },
+              )
+            : createCabin(
+                { ...cabin, image: imageUrl },
+                {
+                  onSuccess: handleSuccess,
+                },
+              );
+        },
+      });
+    }
+
+    updateCabin(
+      { ...cabin },
+      {
+        onSuccess: handleSuccess,
+      },
+    );
   };
 
   return (
@@ -103,10 +138,15 @@ const CabinForm = (props: CabinFormProps) => {
             size="medium"
             type="reset"
             onClick={onCancel}
+            disabled={isCreating || isUpdating || isUploading}
           >
             Cancel
           </Button>
-          <Button size="medium" type="submit">
+          <Button
+            size="medium"
+            type="submit"
+            disabled={isCreating || isUpdating || isUploading}
+          >
             {isEdit ? 'Edit' : 'Create New'} Cabin
           </Button>
         </Actions>
