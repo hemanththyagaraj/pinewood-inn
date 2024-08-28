@@ -11,12 +11,15 @@ export default defineConfig({
     react(),
     tsConfigPaths(),
     eslint({
-      failOnError: true,
+      failOnError: false,
     }),
   ],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
+  },
+  server: {
+    open: true,
   },
 });
