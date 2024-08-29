@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
+import Devtool from 'components/devtool/devtool';
 import { Cabin } from 'types/base';
 import FormField from 'components/form-field/form-field';
 import Input from 'components/input/input';
@@ -151,7 +151,7 @@ const CabinForm = (props: CabinFormProps) => {
           </Button>
         </Actions>
       </StyledForm>
-      <DevTool control={control} />
+      <Devtool control={control} />
     </>
   );
 };
